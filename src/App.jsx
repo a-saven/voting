@@ -91,7 +91,7 @@ function App() {
             votingHistory={state.votingHistory}
             onStartNewRound={startNewRound}
           />
-          <hr className="my-4" />
+          <hr className="my-4 w-1/2 mx-auto border-t border-gray-200" />
           <CandidateList candidates={state.candidates} />
           <VoteForm
             candidates={state.candidates}
