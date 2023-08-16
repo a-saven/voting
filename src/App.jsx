@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import "./App.css";
 import votingAbi from "./contracts/voting.json";
+import { WalletConnection, Dashboard, VoteForm, CandidateList } from "./components";
 
 function App() {
   const [web3, setWeb3] = useState(null);
@@ -91,60 +92,28 @@ function App() {
 
   return (
     <div className="container mx-auto px-4">
-      <h1 className="text-3xl font-bold mb-6">Connect your wallet</h1>
-      {isConnected ? (
+      <WalletConnection
+        isConnected={isConnected}
+        accounts={accounts}
+        onDisconnect={() => setAccounts([])}
+        onConnect={connect}
+      />
+      {isConnected && (
         <div>
-          <div className="text-xl font-bold mb-2">Wallet Connected: {accounts[0]}</div>
-          <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => setAccounts([])}>
-            Disconnect Wallet
-          </button>
+          <Dashboard
+            userBalance={userBalance}
+            currentRound={currentRound}
+            votingHistory={votingHistory}
+            onStartNewRound={startNewRound}
+          />
           <hr className="my-4" />
-          <h2 className="text-2xl font-semibold mb-2">Dashboard</h2>
-          <h3 className="text-xl font-semibold mb-2">Voting History:</h3>
-          <ul>
-            {votingHistory.map((round) => (
-              <li key={round}>Voted in Round: {round}</li>
-            ))}
-          </ul>
-          <h3 className="text-xl font-semibold mb-2 mt-4">Account Balance:</h3>
-          <p>{userBalance} ETH</p>
-          <h3 className="text-xl font-semibold mb-2">Current Round: {currentRound}</h3>
-          <button className="bg-green-500 text-white px-4 py-2 rounded mb-4" onClick={startNewRound}>
-            Start New Round
-          </button>
-          <hr className="my-4" />
-          <h3 className="text-xl font-semibold mb-2">Candidate List</h3>
-          <ul className="list-none">
-            {candidates.map((candidate) => (
-              <li key={candidate.id} className="border-b-2 border-gray-300 py-2">
-                <div>Id: {candidate.id}</div>
-                <div>Name: {candidate.name}</div>
-                <div>Vote Count: {candidate.voteCount}</div>
-              </li>
-            ))}
-          </ul>
-          <h3 className="text-xl font-semibold mb-2 mt-4">Vote for your favorite candidate:</h3>
-          <form>
-            <label className="block mb-2" htmlFor="candidate">
-              Select a candidate:
-            </label>
-            <input
-              className="border-2 border-gray-300 rounded px-2 py-1 mb-2"
-              type="number"
-              id="candidate"
-              value={selectedCandidate}
-              onChange={(event) => setSelectedCandidate(parseInt(event.target.value))}
-            />
-            <br />
-            <button className="bg-blue-500 text-white px-4 py-2 rounded" type="button" onClick={handleVote}>
-              Vote
-            </button>
-          </form>
+          <CandidateList candidates={candidates} />
+          <VoteForm
+            onVote={handleVote}
+            selectedCandidate={selectedCandidate}
+            onSelectChange={(event) => setSelectedCandidate(parseInt(event.target.value))}
+          />
         </div>
-      ) : (
-        <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={connect}>
-          Connect With MetaMask
-        </button>
       )}
     </div>
   );
