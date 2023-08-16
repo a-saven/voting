@@ -1,3 +1,5 @@
+import React from "react";
+
 export function Dashboard({ userBalance, currentRound, votingHistory, onStartNewRound }) {
   return (
     <div>

@@ -1,3 +1,5 @@
+import React from "react";
+
 export function VoteForm({ onVote, selectedCandidate, onSelectChange }) {
   return (
     <div>
