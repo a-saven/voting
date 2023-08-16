@@ -84,23 +84,26 @@ function App() {
         onConnect={connect}
       />
       {isConnected && (
-        <div>
-          <Dashboard
-            userBalance={state.userBalance}
-            currentRound={state.currentRound}
-            votingHistory={state.votingHistory}
-            onStartNewRound={startNewRound}
-          />
-          <hr className="my-4 w-1/2 mx-auto border-t border-gray-200" />
-          <CandidateList candidates={state.candidates} />
-          <VoteForm
-            candidates={state.candidates}
-            onVote={handleVote}
-            selectedCandidate={state.selectedCandidate}
-            onSelectChange={(event) =>
-              dispatch({ type: "SET_SELECTED_CANDIDATE", payload: parseInt(event.target.value) })
-            }
-          />
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 w-full">
+          <div className="flex-1">
+            <Dashboard
+              userBalance={state.userBalance}
+              currentRound={state.currentRound}
+              votingHistory={state.votingHistory}
+              onStartNewRound={startNewRound}
+            />
+          </div>
+          <div className="flex-1">
+            <CandidateList candidates={state.candidates} />
+            <VoteForm
+              candidates={state.candidates}
+              onVote={handleVote}
+              selectedCandidate={state.selectedCandidate}
+              onSelectChange={(event) =>
+                dispatch({ type: "SET_SELECTED_CANDIDATE", payload: parseInt(event.target.value) })
+              }
+            />
+          </div>
         </div>
       )}
     </div>

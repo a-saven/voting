@@ -4,6 +4,7 @@ export function Dashboard({ userBalance, currentRound, votingHistory, onStartNew
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-2">Dashboard</h2>
+      <hr className="my-4 w-1/2 mx-auto border-t border-gray-200" />
       <h3 className="text-xl font-semibold mb-2">Voting History:</h3>
       <ul>
         {votingHistory.map((round) => (
