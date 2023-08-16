@@ -1,6 +1,4 @@
 import React, { useReducer, useEffect } from "react";
-import Web3 from "web3";
-import "./App.css";
 import votingAbi from "./contracts/voting.json";
 import { WalletConnection, Dashboard, VoteForm, CandidateList } from "./voting";
 import { reducer, initialState } from "./voting/state";
@@ -96,6 +94,7 @@ function App() {
           <hr className="my-4" />
           <CandidateList candidates={state.candidates} />
           <VoteForm
+            candidates={state.candidates}
             onVote={handleVote}
             selectedCandidate={state.selectedCandidate}
             onSelectChange={(event) =>
